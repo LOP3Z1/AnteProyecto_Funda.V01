@@ -7,89 +7,90 @@
 
 using namespace std;
 
-struct Cuenta{
+// Estructura para almacenar los datos de los usuarios
+struct Cuenta {
     string usuario;
     string clave;
     double saldo;
 };
 
+// Declaración de funciones (Prototipos)
 void menuPrincipal();
 void Regitro_De_Usuario();
-bool InicioSesión();
-void Menu_del_Banco(Cuenta && Usuario_Activo);
-void Jugar_Ahorcado(Cuenta && Usuario_Activo);
-void Guardar_En_Archivos(CuentaC);
-bool Cargar_Usuario(string usuario, string clave, Cuenta && Usuario_Encontrado);
+bool InicioSesion();
+void Menu_del_Banco(Cuenta &Usuario_Activo);
+void Jugar_Ahorcado(Cuenta &Usuario_Activo);
+void Guardar_En_Archivos(const Cuenta &c);
+bool Cargar_Usuario(string usuario, string clave, Cuenta &Usuario_Encontrado);
+void Actualizar_Saldo_Archivo(const Cuenta &Usuario_Activo);
 
-int main(){
-    srand(time(0));//Semilla para el juego de ahorcado en aleatorio.
+int main() {
+    srand(time(0)); // Semilla para que las palabras del ahorcado sean aleatorias
     menuPrincipal();
     return 0;
-};
+}
 
-void menuPrincipal(){
+void menuPrincipal() {
     int opcion;
-    while(true){
-        cout <<"_______BANCO CENTRAL______" << endl;
-        cout <<"1. Registrarse: " << endl;
-        cout <<"2. Iniciar Sesion: " << endl;
-        cout <<"3. Salir: " << endl;
-        cout <<"SELECCIONE UNA DE LAS OPCIONES: " << endl;
+    while(true) {
+        cout << "\n_______BANCO CENTRAL______" << endl;
+        cout << "1. Registrarse" << endl;
+        cout << "2. Iniciar Sesion" << endl;
+        cout << "3. Salir" << endl;
+        cout << "SELECCIONE UNA DE LAS OPCIONES: ";
         cin >> opcion;
 
-        switch(opcion){
+        switch(opcion) {
             case 1:
-            Regitro_De_Usuario();
-            break
+                Regitro_De_Usuario();
+                break;
             case 2:
-            if(InicioSesión()){
-                cout <<"Sesion Cerrada Correctamente: " << endl;
-            }
-            break;
+                if(InicioSesion()) {
+                    cout << "Sesion Cerrada Correctamente." << endl;
+                }
+                break;
             case 3:
-            cout << "Gracias por usa el sistema: " << endl;
-            return;
-            default;
-            cout <<"Opciones Invalida: " << endl;
+                cout << "Gracias por usar el sistema." << endl;
+                return;
+            default:
+                cout << "Opcion Invalida." << endl;
         }
     }
 }
 
-//MANEJO DE LOS ARCHIVOS; (REGITRO)
-void Regitro_De_Usuario(){
+void Regitro_De_Usuario() {
     Cuenta nuevaCuenta;
-    cout << "  Registro d Cuenta   " << endl;
-    cout << "Ingrese nuevo usuario: " << endl;
-    cin >> nuevaCuenta;
-    cout <<"Ingrese nueva clave (CLAVE DE 4 DIGITOS): " << endl;
+    cout << "\n--- Registro de Cuenta ---" << endl;
+    cout << "Ingrese nuevo usuario: ";
+    cin >> nuevaCuenta.usuario;
+    cout << "Ingrese nueva clave (CLAVE DE 4 DIGITOS): ";
     cin >> nuevaCuenta.clave;
-
-    //Opeardores de asignación;
-    nuevaCuenta.saldo = $ 20.0;
-
+    
+    nuevaCuenta.saldo = 20.0; // Se eliminó el signo '$' erróneo
     Guardar_En_Archivos(nuevaCuenta);
-    cout <<"Te haz regitrado con exito Regalo Inicial : $ 20.0: " << endl;
-
+    cout << "Te has registrado con exito. Regalo Inicial: $20.0" << endl;
 }
 
-void Guardar_En_Archivos(CuentaC);
-ofstream archivo("usuarios.txt, ios:::app");
-if(archivo.is_open()){
-    archivo <<c.usuario << " " << c.clave << " " << c.saldo << " " << endl;
-    archivo.close();
+void Guardar_En_Archivos(const Cuenta &c) {
+    ofstream archivo("usuarios.txt", ios::app); // Corrección de comillas y puntos dobles
+    if(archivo.is_open()) {
+        archivo << c.usuario << " " << c.clave << " " << c.saldo << endl;
+        archivo.close();
+    }
 }
 
-bool Cargar_Usuario(string usuario, string clave, Cuenta & Usuario_Encontrado){
+bool Cargar_Usuario(string usuario, string clave, Cuenta &Usuario_Encontrado) {
     ifstream archivo("usuarios.txt");
-    if(!archivo.is_open())return false;
+    if(!archivo.is_open()) return false;
 
     string u, c;
     double s;
-    while(archivo >> u >> c >> s){
-        if(u == usuario && c == clave){
-            Usuario_Encontrado = u;
-            Usuario_Encontrado = c;
-            Usuario_Encontrado = s;
+    while(archivo >> u >> c >> s) {
+        if(u == usuario && c == clave) {
+            // Asignación correcta a los campos de la estructura
+            Usuario_Encontrado.usuario = u;
+            Usuario_Encontrado.clave = c;
+            Usuario_Encontrado.saldo = s;
             archivo.close();
             return true;
         }
@@ -98,30 +99,29 @@ bool Cargar_Usuario(string usuario, string clave, Cuenta & Usuario_Encontrado){
     return false;
 }
 
-bool InicioSesión(){
-    string u,c;
-    Cuenta Usuario_Activo
-    cout <<"______Inicio de Sesion__________" << endl;
+bool InicioSesion() {
+    string u, c;
+    Cuenta Usuario_Activo;
+    cout << "\n______Inicio de Sesion__________" << endl;
     cout << "Usuario: ";
     cin >> u;
     cout << "Clave: ";
     cin >> c;
 
-    if(Cargar_Usuario(u, c, Usuario_Activo)){
-        cout <<"Bienvenido/a, " << Usuario_Activo.usuario << "!" << endl;
-        Menu_del_Banco(Usuario_Activo),
+    if(Cargar_Usuario(u, c, Usuario_Activo)) {
+        cout << "Bienvenido/a, " << Usuario_Activo.usuario << "!" << endl;
+        Menu_del_Banco(Usuario_Activo);
         return true;
-    }
-    else{
-        cout <<"Usuario o Clave incorrectos (SINTAX ERROR 404)" << endl;
+    } else {
+        cout << "Usuario o Clave incorrectos (SINTAX ERROR 404)" << endl;
         return false;
     }
 }
 
-void Menu_del_Banco(Cuenta &Usuario_Activo){
+void Menu_del_Banco(Cuenta &Usuario_Activo) {
     int opcion;
-    while(true){
-        cout << "_______BANCA ELECTRONICA______" << endl;
+    while(true) {
+        cout << "\n_______BANCA ELECTRONICA______" << endl;
         cout << "Saldo Actual: $" << Usuario_Activo.saldo << endl;
         cout << "1. Retirar Dinero" << endl;
         cout << "2. Jugar al Ahorcado (Cuesta $5.00, gana $15.00)" << endl;
@@ -129,46 +129,102 @@ void Menu_del_Banco(Cuenta &Usuario_Activo){
         cout << "Seleccione una de las opciones: ";
         cin >> opcion;
 
-        if(opcion == 1){
+        if(opcion == 1) {
             double monto;
             cout << "Monto a retirar: ";
             cin >> monto;
-            
-            if(monto > 0 && monto <= Usuario_Activo.saldo){
+            if(monto > 0 && monto <= Usuario_Activo.saldo) {
                 Usuario_Activo.saldo -= monto;
+                Actualizar_Saldo_Archivo(Usuario_Activo); // Guarda el nuevo saldo en el archivo txt
                 cout << "Retiro exitoso. Nuevo saldo: $" << Usuario_Activo.saldo << endl;
             } else {
                 cout << "Fondos insuficientes o monto invalido." << endl;
             }
-        } else if(opcion == 2){
-            if(Usuario_Activo.saldo >= $5.00){
-                Usuario_Activo.saldo -= $5.00
-                Jugar_Ahorcado(Usuario_Activo);
-            }else{
-                cout << "No tiene saldo suficinete para poder jugar ($5.00). " << endl;
-            }    
         } 
-        else if(opcion == 3){
+        else if(opcion == 2) {
+            if(Usuario_Activo.saldo >= 5.00) {
+                Usuario_Activo.saldo -= 5.00;
+                Actualizar_Saldo_Archivo(Usuario_Activo);
+                Jugar_Ahorcado(Usuario_Activo);
+            } else {
+                cout << "No tiene saldo suficiente para poder jugar ($5.00)." << endl;
+            }
+        } 
+        else if(opcion == 3) {
             return;
-        }        
+        }
     }
 }
-//AQUI HICE ARREGLOS / ARRAYS y Minijuego Del Ahorcado
-void Jugar_Ahorcado(Cuenta &Usuario_Activo){
+
+void Jugar_Ahorcado(Cuenta &Usuario_Activo) {
     string palabras[5] = {"banco", "dinero", "ahorro", "credito", "tarjeta"};
-    stringPalabraSecreta = palabras[rand() % 5];
-    stringPalabraOculta(palabraSecreta.length(),'_');
-    const int intentosRestantes = 6;
+    string palabraSecreta = palabras[rand() % 5];
+    string palabraOculta(palabraSecreta.length(), '_');
+    int intentosRestantes = 6;
     char letra;
     bool gano = false;
 
-    cout <<"MINIJUEGO DEL AHORCADO: BANCARIO " << endl;
-    cout <<"Adivina la palabra realcionada con finanzas. " << endl;
+    cout << "\n--- MINIJUEGO DEL AHORCADO: BANCARIO ---" << endl;
+    cout << "Adivina la palabra relacionada con finanzas." << endl;
 
-    //SE OCUPO UN CICLO WHILE,FOR PARA EL JUEGO;
-    while(intentosRestatantes > 0 && !gano){
-        cout <<"PALABRA. "
-        for(int i = 0; i < PalabraOculta.length)
+    while(intentosRestantes > 0 && !gano) {
+        cout << "\nPalabra: ";
+        for(char c : palabraOculta) {
+            cout << c << " ";
+        }
+        cout << "\nIntentos restantes: " << intentosRestantes << endl;
+        cout << "Introduce una letra: ";
+        cin >> letra;
+
+        bool acierto = false;
+        for(size_t i = 0; i < palabraSecreta.length(); i++) {
+            if(palabraSecreta[i] == letra) {
+                palabraOculta[i] = letra;
+                acierto = true;
+            }
+        }
+
+        if(!acierto) {
+            intentosRestantes--;
+            cout << "Letra incorrecta!" << endl;
+        }
+
+        if(palabraOculta == palabraSecreta) {
+            gano = true;
+        }
     }
 
+    if(gano) {
+        Usuario_Activo.saldo += 15.00; // Premio por ganar
+        Actualizar_Saldo_Archivo(Usuario_Activo);
+        cout << "\n¡Felicidades! Ganaste. La palabra era: " << palabraSecreta << endl;
+        cout << "Se han sumado $15.00 a tu cuenta. Nuevo Saldo: $" << Usuario_Activo.saldo << endl;
+    } else {
+        cout << "\nPerdiste. La palabra secreta era: " << palabraSecreta << endl;
+    }
+}
+
+// Función auxiliar para que los saldos actualizados se guarden de verdad en el archivo .txt
+void Actualizar_Saldo_Archivo(const Cuenta &Usuario_Activo) {
+    ifstream archivoLectura("usuarios.txt");
+    vector<Cuenta> cuentas;
+    Cuenta temporal;
+
+    if(archivoLectura.is_open()) {
+        while(archivoLectura >> temporal.usuario >> temporal.clave >> temporal.saldo) {
+            if(temporal.usuario == Usuario_Activo.usuario) {
+                temporal.saldo = Usuario_Activo.saldo;
+            }
+            cuentas.push_back(temporal);
+        }
+        archivoLectura.close();
+    }
+
+    ofstream archivoEscritura("usuarios.txt");
+    if(archivoEscritura.is_open()) {
+        for(const auto &c : cuentas) {
+            archivoEscritura << c.usuario << " " << c.clave << " " << c.saldo << endl;
+        }
+        archivoEscritura.close();
+    }
 }
