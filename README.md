@@ -1,5 +1,8 @@
 # AnteProyecto_Funda.V01
+
 Creación del anteproyecto de fundamentos.
+
+```mermaid
 graph TD
     %% Estilos Generales Optimizados (Alto Contraste y Colores Llamativos)
     classDef inicio fill:#2ecc71,stroke:#27ae60,stroke-width:3px,color:#fff,font-weight:bold;
