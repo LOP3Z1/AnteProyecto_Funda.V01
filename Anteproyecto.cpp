@@ -189,6 +189,7 @@ void Jugar_Ahorcado(Cuenta &Usuario_Activo) {
             cout << "Letra incorrecta!" << endl;
         }
 
+
         if(palabraOculta == palabraSecreta) {
             gano = true;
         }
@@ -201,9 +202,55 @@ void Jugar_Ahorcado(Cuenta &Usuario_Activo) {
         cout << "Se han sumado $15.00 a tu cuenta. Nuevo Saldo: $" << Usuario_Activo.saldo << endl;
     } else {
         cout << "\nPerdiste. La palabra secreta era: " << palabraSecreta << endl;
+
+    //SE OCUPO UN CICLO WHILE,FOR PARA EL JUEGO;
+    while(intentosRestatantes > 0 && !gano){
+        cout <<"PALABRA. "
+        for(int i = 0; i < PalabraOculta.length)
+        cout <<"Palabra: ";
+
+        for(int i = 0; i < PalabraOculta.length(); i++){
+            cout << PalabraOculta[i] << " ";
+        }
+
+        cout <<"Intentos restantes: " << intentosRestantes << endl;
+        cout <<"Introduce una letra: ";
+        cin >> int letra;
+
+        bool acierto = false;
+        for(int i = 0; i < palabraSecreta.length(); i++){
+            if(palabraSecreta[i] == letra){
+                PalabraOculta[i] == letra;
+                acierto = true;
+            }
+        }
+
+        if(!acierto){
+            intentosRestantes--;
+            cout << "Letra Incorrecta!. " << endl;
+        }
+        else{
+            cout << "Bien has acertado!. " << endl;
+        } 
+
+        if(PalabraOculta == palabraSecreta){
+            gano = true;
+        }
+
+    }
+
+    if(gano){
+        cout << "Felicidades! Haz Ganado. La Palabra era: " << palabraSecreta << endl;
+        Usuario_Activo.saldo += $15.00;
+        cout <<"Se han depositado tus $15.00 en tu cuenta Bancaria!. " << endl;
+    }
+    else{
+        cout << "Perdistes! Te quedastes sin mas intetos. La palabara era: " << palabraSecreta << endl;
+
     }
 }
 
+ copilot/vscode-mpm78q1g-3784
 // Función auxiliar para que los saldos actualizados se guarden de verdad en el archivo .txt
 void Actualizar_Saldo_Archivo(const Cuenta &Usuario_Activo) {
     ifstream archivoLectura("usuarios.txt");
@@ -227,4 +274,5 @@ void Actualizar_Saldo_Archivo(const Cuenta &Usuario_Activo) {
         }
         archivoEscritura.close();
     }
+
 }
