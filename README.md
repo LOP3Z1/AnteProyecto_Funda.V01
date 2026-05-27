@@ -1,11 +1,10 @@
 # AnteProyecto_Funda.V01
 Creación del anteproyecto de fundamentos.
-```mermaid
 graph TD
-    %% Estilos Generales
-    classDef inicio fin fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef proceso fill:#bbf,stroke:#333,stroke-width:1px;
-    classDef decision fill:#ff9,stroke:#333,stroke-width:1px;
+    %% Estilos Generales Optimizados (Alto Contraste y Colores Llamativos)
+    classDef inicio fill:#2ecc71,stroke:#27ae60,stroke-width:3px,color:#fff,font-weight:bold;
+    classDef proceso fill:#1f618d,stroke:#1a5276,stroke-width:2px,color:#fff,font-weight:bold;
+    classDef decision fill:#f4d03f,stroke:#d4ac0d,stroke-width:2px,color:#1b2631,font-weight:bold;
 
     %% Flujo Principal
     Start([Inicio: main]) --> MenuP[Mostrar Menu Principal]
@@ -53,5 +52,5 @@ graph TD
 
     %% Asignación de clases estéticas
     class Start,Exit inicio;
-    class Reg,RegInput,RegSave,LogInput,LogFail,Retiro,DoRetiro,ErrorSaldo,PayAhorcado,Play,WinPrize,LoseMsg,ErrorCosto proceso;
+    class MenuP,BankMenu,Ahorcado,Reg,RegInput,RegSave,LogInput,LogFail,Retiro,DoRetiro,ErrorSaldo,PayAhorcado,Play,WinPrize,LoseMsg,ErrorCosto proceso;
     class OpciónP,LogCheck,OpciónB,CheckSaldo,CheckCosto,GameLoop,CheckWin decision;
