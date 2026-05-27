@@ -169,6 +169,45 @@ void Jugar_Ahorcado(Cuenta &Usuario_Activo){
     while(intentosRestatantes > 0 && !gano){
         cout <<"PALABRA. "
         for(int i = 0; i < PalabraOculta.length)
+        cout <<"Palabra: ";
+
+        for(int i = 0; i < PalabraOculta.length(); i++){
+            cout << PalabraOculta[i] << " ";
+        }
+
+        cout <<"Intentos restantes: " << intentosRestantes << endl;
+        cout <<"Introduce una letra: ";
+        cin >> int letra;
+
+        bool acierto = false;
+        for(int i = 0; i < palabraSecreta.length(); i++){
+            if(palabraSecreta[i] == letra){
+                PalabraOculta[i] == letra;
+                acierto = true;
+            }
+        }
+
+        if(!acierto){
+            intentosRestantes--;
+            cout << "Letra Incorrecta!. " << endl;
+        }
+        else{
+            cout << "Bien has acertado!. " << endl;
+        } 
+
+        if(PalabraOculta == palabraSecreta){
+            gano = true;
+        }
+
+    }
+
+    if(gano){
+        cout << "Felicidades! Haz Ganado. La Palabra era: " << palabraSecreta << endl;
+        Usuario_Activo.saldo += $15.00;
+        cout <<"Se han depositado tus $15.00 en tu cuenta Bancaria!. " << endl;
+    }
+    else{
+        cout << "Perdistes! Te quedastes sin mas intetos. La palabara era: " << palabraSecreta << endl;
     }
 
 }
