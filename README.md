@@ -10,7 +10,7 @@ graph TD
     classDef decision fill:#f4d03f,stroke:#d4ac0d,stroke-width:2px,color:#1b2631,font-weight:bold;
 
     %% Flujo Principal
-    Start([Inicio: main]) --> MenuP[Mostrar Menu Principal]
+    Start([Inicio]) --> MenuP[Mostrar Menu Principal]
 
     %% Menu Principal
     MenuP --> OpcionP{¿Que opcion elige?}
